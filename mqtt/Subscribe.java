@@ -1,4 +1,4 @@
-package com.ufcity.semantic.communication;
+package ufcitycore.mqtt;
 
 import com.ufcity.handler.Main;
 import org.eclipse.paho.client.mqttv3.*;

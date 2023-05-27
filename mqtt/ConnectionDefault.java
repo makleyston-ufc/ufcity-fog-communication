@@ -1,4 +1,4 @@
-package com.ufcity.semantic.communication;
+package ufcitycore.mqtt;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;

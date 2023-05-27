@@ -1,4 +1,4 @@
-package com.ufcity.semantic.communication;
+package ufcitycore.mqtt;
 
 public interface MessageObserver {
 

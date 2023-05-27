@@ -1,4 +1,4 @@
-package com.ufcity.handler.models;
+package ufcitycore.models;
 
 public class Data {
     public String tag;

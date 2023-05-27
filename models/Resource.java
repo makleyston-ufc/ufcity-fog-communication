@@ -1,4 +1,4 @@
-package com.ufcity.handler.models;
+package ufcitycore.models;
 
 import com.google.gson.Gson;
 

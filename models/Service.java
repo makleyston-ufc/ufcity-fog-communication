@@ -1,4 +1,4 @@
-package com.ufcity.handler.models;
+package ufcitycore.models;
 
 import java.util.ArrayList;
 import java.util.Map;

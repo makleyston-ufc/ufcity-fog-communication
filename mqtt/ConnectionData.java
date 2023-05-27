@@ -1,4 +1,4 @@
-package com.ufcity.semantic.communication;
+package ufcitycore.mqtt;
 
 import java.util.ArrayList;
 import java.util.List;
