@@ -1,19 +1,16 @@
 package ufcitycore.mqtt;
 
-import com.ufcity.handler.Main;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.util.logging.Logger;
 
-import static com.ufcity.handler.communcation.sending.mqtt.ConnectionData.PREFIX;
-import static com.ufcity.handler.communcation.sending.mqtt.ConnectionData.PUB;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.LocalDateTime.now;
+import static ufcitycore.mqtt.ConnectionData.PREFIX;
+import static ufcitycore.mqtt.ConnectionData.PUB;
 
 public class Publish extends ConnectionDefault{
-
-    static Logger log = Logger.getLogger(Main.class.getName());
 
     public Publish(ConnectionConfig connectionConfig){
         super(connectionConfig);

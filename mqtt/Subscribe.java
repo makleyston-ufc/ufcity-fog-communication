@@ -1,16 +1,12 @@
 package ufcitycore.mqtt;
 
-import com.ufcity.handler.Main;
 import org.eclipse.paho.client.mqttv3.*;
 
-import java.util.logging.Logger;
-
-import static com.ufcity.handler.communcation.sending.mqtt.ConnectionData.PREFIX;
-import static com.ufcity.handler.communcation.sending.mqtt.ConnectionData.SUB;
 import static java.time.LocalDateTime.now;
+import static ufcitycore.mqtt.ConnectionData.PREFIX;
+import static ufcitycore.mqtt.ConnectionData.SUB;
 
 public class Subscribe extends ConnectionDefault {
-    static Logger log = Logger.getLogger(Main.class.getName());
 //    ConnectionConfig conn;
     String clientId = PREFIX+SUB+now();
 
