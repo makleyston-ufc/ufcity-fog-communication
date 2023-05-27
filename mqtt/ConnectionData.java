@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionData {
-    final public static String PREFIX = "handler_";
+    final public static String PREFIX = "";
     final public static String PUB = "pub_";
     final public static String SUB = "sub_";
 //    public static String EDGE_PORT = "1883";
@@ -54,14 +54,6 @@ public class ConnectionData {
         INNER_HOST = innerHost;
     }
 
-//    public static String getEdgePort() {
-//        return EDGE_PORT;
-//    }
-//
-//    public static void setEdgePort(String edgePort) {
-//        EDGE_PORT = edgePort;
-//    }
-
     public static String getPortCloud() {
         return PORT_CLOUD;
     }
@@ -69,14 +61,6 @@ public class ConnectionData {
     public static void setPortCloud(String portCloud) {
         PORT_CLOUD = portCloud;
     }
-
-//    public static String getEdgeHost() {
-//        return EDGE_HOST;
-//    }
-
-//    public static void setEdgeHost(String edgeHost) {
-//        EDGE_HOST = edgeHost;
-//    }
 
     public static String getHostCloud() {
         return HOST_CLOUD;
@@ -108,6 +92,5 @@ public class ConnectionData {
     public static String getCloudResourceDataTopic(String uuidItself, String uuidDevice, String uuiResource){
         return "resource_data/"+uuidItself+"/"+uuidDevice+"/"+uuiResource;
     }
-
 
 }

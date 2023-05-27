@@ -7,12 +7,10 @@ import static ufcitycore.mqtt.ConnectionData.PREFIX;
 import static ufcitycore.mqtt.ConnectionData.SUB;
 
 public class Subscribe extends ConnectionDefault {
-//    ConnectionConfig conn;
     String clientId = PREFIX+SUB+now();
 
     public Subscribe(ConnectionConfig connectionConfig) {
         super(connectionConfig);
-//        this.conn = connectionConfig;
     }
 
     public void subscribe(MessageObserver messageObserver) throws MqttException {
