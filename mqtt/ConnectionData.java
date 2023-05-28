@@ -20,8 +20,23 @@ public class ConnectionData {
     final public static String EDGE_RESOURCE_COMMANDS_PUBLISH = "commands_fog_to_edge";
     final public static String EDGE_RESEND_RESOURCE_DATA_PUBLISH = "resend";
     final public static String INNER_CEP_RESOURCE_DATA_PUBLISH = "cep";
-    final public static String INNER_RESOURCE_DATA = "resource_data";
     final public static String INNER_COMBINED_SERVICES_PUBLISH = "combined_services";
+    public static final String ADD_EPL = "add_epl";
+    public static final String REMOVE_EPL = "remove_epl";
+    public static final String COMMANDS_TO_EDGE = "commands_fog_to_edge";
+
+    public static List<String> getCEPSubscribeTopics(String uuidFog){
+        List<String> topics = new ArrayList<>();
+        topics.add(ADD_EPL + "/" + uuidFog);
+        topics.add(REMOVE_EPL + "/" + uuidFog);
+        return topics;
+    }
+
+    public static List<String> getCommandsToEdge(String uuid_device){
+        List<String> topics = new ArrayList<>();
+        topics.add(COMMANDS_TO_EDGE + "/" + uuid_device);
+        return topics;
+    }
 
     public static List<String> getEdgeSubscribeTopics(){
         List<String> topics = new ArrayList<String>();
@@ -32,9 +47,9 @@ public class ConnectionData {
         return topics;
     }
 
-    public static List<String> getInnerSubscribeTopics(){
+    public static List<String> getResourceDataSubscribeTopic(){
         List<String> topics = new ArrayList<String>();
-        topics.add(INNER_RESOURCE_DATA +"/+");
+        topics.add(EDGE_RESOURCES_DATA_SUBSCRIBE +"/+");
         return topics;
     }
 
