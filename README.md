@@ -22,7 +22,7 @@ dependencies {
 }
 ```
 
-In the directory `java`, your Java project:
+Add git submodule in your Java project:
 ```
-git clone https://github.com/makleyston-ufc/ufcitycore.git
+git submodule add https://github.com/makleyston-ufc/ufcitycore.git src/main/java/ufcitycore
 ```
