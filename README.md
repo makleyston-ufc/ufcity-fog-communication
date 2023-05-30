@@ -12,13 +12,15 @@ See the example following for use this core:
 Dependencies:
 * [Gson](https://github.com/google/gson).
 * [MQTT Paho](https://www.eclipse.org/paho/).
+* [YAML Snake](https://bitbucket.org/snakeyaml/snakeyaml/src/master/).
 
 To import the dependencies in your project via Gradle: 
 ```
 dependencies {
     ...
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation "com.google.code.gson:gson:2.10.1"
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.1"
+    implementation "org.yaml:snakeyaml:2.0"
 }
 ```
 
