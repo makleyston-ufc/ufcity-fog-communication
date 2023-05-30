@@ -3,6 +3,7 @@ package ufcitycore.models;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Resource {
 
@@ -12,6 +13,14 @@ public class Resource {
 
     public ArrayList< Service > getServices(){
         return this.services;
+    }
+
+    public Service getServiceByUUID(String uuidService){
+        for(Service _service : this.services){
+            if(Objects.equals(_service.getUuid_service(), uuidService))
+                return _service;
+        }
+        return null;
     }
 
     public Location getLocation() {
@@ -28,6 +37,10 @@ public class Resource {
 
     public void setUuid_resource(String uuid_resource) {
         this.uuid_resource = uuid_resource;
+    }
+
+    public void addService(Service service){
+        this.services.add(service);
     }
 
     public String toJson(){

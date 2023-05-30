@@ -9,10 +9,10 @@ public class ConnectionData {
     final public static String SUB = "sub_";
 //    public static String EDGE_PORT = "1883";
     public static String INNER_PORT = "1883";
-    public static String PORT_CLOUD = "1883";
+    public static String CLOUD_PORT = "1883";
 //    public static String EDGE_HOST;
     public static String INNER_HOST;
-    public static String HOST_CLOUD;
+    public static String CLOUD_HOST;
     final public static String EDGE_RESOURCES_DATA_SUBSCRIBE = "resource_data";
     final public static String EDGE_DEVICE_SUBSCRIBE = "device";
     final public static String EDGE_REMOVED_RESOURCES_SUBSCRIBE = "removed_resource";
@@ -57,7 +57,7 @@ public class ConnectionData {
         return INNER_PORT;
     }
 
-    public static void setInnerPort(String innerPort) {
+    public static void setFogPort(String innerPort) {
         INNER_PORT = innerPort;
     }
 
@@ -65,24 +65,24 @@ public class ConnectionData {
         return INNER_HOST;
     }
 
-    public static void setInnerHost(String innerHost) {
+    public static void setFogHost(String innerHost) {
         INNER_HOST = innerHost;
     }
 
-    public static String getPortCloud() {
-        return PORT_CLOUD;
+    public static String getCloudPort() {
+        return CLOUD_PORT;
     }
 
-    public static void setPortCloud(String portCloud) {
-        PORT_CLOUD = portCloud;
+    public static void setCloudPort(String portCloud) {
+        CLOUD_PORT = portCloud;
     }
 
-    public static String getHostCloud() {
-        return HOST_CLOUD;
+    public static String getCloudHost() {
+        return CLOUD_HOST;
     }
 
-    public static void setHostCloud(String hostCloud) {
-        HOST_CLOUD = hostCloud;
+    public static void setCloudHost(String hostCloud) {
+        CLOUD_HOST = hostCloud;
     }
 
     /* resource_data/uuid_device/uuid_resource     -> Message is resource data */
