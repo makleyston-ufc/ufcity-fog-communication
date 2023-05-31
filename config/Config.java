@@ -3,6 +3,7 @@ package ufcitycore.config;
 import com.ufcity.handler.procedures.*;
 import org.yaml.snakeyaml.Yaml;
 import java.io.*;
+import java.util.List;
 import java.util.Map;
 
 public class Config {
@@ -11,73 +12,155 @@ public class Config {
         try {
             // Carrega o arquivo YAML
             FileInputStream inputStream = new FileInputStream("config.yaml");
-
-            // Faz o parsing do arquivo YAML
             Yaml yaml = new Yaml();
-            Map<String, Object> data = yaml.load(inputStream);
+            Map<String, Object> data = (Map) yaml.load(inputStream);
+//            System.out.println(data.toString());
 
             if (data.containsKey("fog-computing")) {
-                Map<String, Object> fogComputing = (Map<String, Object>) data.get("fog-computing");
-                String fogComputingAddress = (String) fogComputing.get("address");
-                String fogComputingPort = (String) fogComputing.get("port");
+                List<Map<String, Object>> fogComputingList = (List<Map<String, Object>>) data.get("fog-computing");
+
+                String fogComputingAddress = null;
+                String fogComputingPort = null;
+
+                for (Map<String, Object> map : fogComputingList) {
+                    if (map.containsKey("address")) {
+                        fogComputingAddress = (String) map.get("address");
+                    }
+                    if (map.containsKey("port")) {
+                        fogComputingPort = String.valueOf(map.get("port"));
+                    }
+                }
+
                 config.configFogMqttBroker(fogComputingAddress, fogComputingPort);
             }
 
             if (data.containsKey("cloud-computing")) {
-                Map<String, Object> cloudComputing = (Map<String, Object>) data.get("cloud-computing");
-                String cloudComputingAddress = (String) cloudComputing.get("address");
-                String cloudComputingPort = (String) cloudComputing.get("port");
+                List<Map<String, Object>> cloudComputingList = (List<Map<String, Object>>) data.get("cloud-computing");
+
+                String cloudComputingAddress = null;
+                String cloudComputingPort = null;
+
+                for (Map<String, Object> map : cloudComputingList) {
+                    if (map.containsKey("address")) {
+                        cloudComputingAddress = (String) map.get("address");
+                    }
+                    if (map.containsKey("port")) {
+                        cloudComputingPort = String.valueOf(map.get("port"));
+                    }
+                }
+
                 config.configCloudMqttBroker(cloudComputingAddress, cloudComputingPort);
             }
 
             if (data.containsKey("database")) {
-                Map<String, Object> database = (Map<String, Object>) data.get("database");
-                String dbAddress = (String) database.get("address");
-                String dbPort = (String) database.get("port");
-                config.configDataBase(dbAddress, dbPort);
+                List<Map<String, Object>> databaseList = (List<Map<String, Object>>) data.get("database");
+
+                String dbAddress = null;
+                String dbPort = null;
+                String username = null;
+                String password = null;
+
+                for (Map<String, Object> map : databaseList) {
+                    if (map.containsKey("address")) {
+                        dbAddress = (String) map.get("address");
+                    }
+                    if (map.containsKey("port")) {
+                        dbPort = String.valueOf(map.get("port"));
+                    }
+                    if (map.containsKey("username")) {
+                        username = (String) map.get("username");
+                    }
+                    if (map.containsKey("password")) {
+                        password = (String) map.get("password");
+                    }
+                }
+
+                config.configDataBase(dbAddress, dbPort, username, password);
             }
 
-            if (data.containsKey("data-groupin")) {
-                Map<String, Object> dataGrouping = (Map<String, Object>) data.get("data-grouping");
-                String groupingDataMethod = (String) dataGrouping.get("method");
-                DataGroupingHandling.getInstance().setMethod(METHODS.methodMap.get(groupingDataMethod));
+            if (data.containsKey("data-grouping")) {
+                List<Map<String, Object>> dataGroupingList = (List<Map<String, Object>>) data.get("data-grouping");
+
+                char method = METHODS.methodMap.get("NONE");
                 int groupingSize = 0, groupingTime = 0;
-                if (dataGrouping.containsKey("size")) {
-                    groupingSize = (int) dataGrouping.get("size");
+
+                for (Map<String, Object> map : dataGroupingList) {
+                    if(map.containsKey("method")) {
+                        String groupingDataMethod = (String) map.get("method");
+                        method = METHODS.methodMap.get(groupingDataMethod);
+                    }
+                    if (map.containsKey("size")) {
+                        groupingSize = (int) map.get("size");
+                    }
+                    if (map.containsKey("time")) {
+                        groupingTime = (int) map.get("time");
+                    }
                 }
-                if (dataGrouping.containsKey("time")) {
-                    groupingTime = (int) dataGrouping.get("time");
-                }
-                config.configGroupData(METHODS.methodMap.get(groupingDataMethod), groupingTime, groupingSize);
+
+                config.configGroupData(method, groupingTime, groupingSize);
             }
 
             if (data.containsKey("missing-data")) {
-                Map<String, Object> missingData = (Map<String, Object>) data.get("missing-data");
+                List<Map<String, Object>> missingDataList = (List<Map<String, Object>>) data.get("missing-data");
+                Map<String, Object> missingData = missingDataList.get(0);
                 String missingDataMethod = (String) missingData.get("method");
                 config.configMissingData(METHODS.methodMap.get(missingDataMethod));
             }
 
             if (data.containsKey("removing-outliers")) {
-                Map<String, Object> removingOutliers = (Map<String, Object>) data.get("removing-outliers");
-                String outliersMethod = (String) removingOutliers.get("method");
-                OutliersHandling.getInstance().setMethod(METHODS.methodMap.get(outliersMethod));
+                List<Map<String, Object>> removingOutliersList = (List<Map<String, Object>>) data.get("removing-outliers");
+
+                char method = METHODS.methodMap.get("NONE");
                 double outliersThreshold = 0, outliersUpper = 0, outliersLower = 0;
-                if (removingOutliers.containsKey("threshold")) {
-                    outliersThreshold = (double) removingOutliers.get("threshold");
+
+                for (Map<String, Object> map : removingOutliersList) {
+                    if(map.containsKey("method")) {
+                        String m = (String) map.get("method");
+                        method = METHODS.methodMap.get(m);
+                    }
+                    if (map.containsKey("threshold")) {
+                        outliersThreshold = (double) map.get("threshold");
+                    }
+                    if (map.containsKey("upper-percentile")) {
+                        outliersUpper = (double) map.get("upper-percentile");
+                    }
+                    if (map.containsKey("lower-percentile")) {
+                        outliersLower = (double) map.get("lower-percentile");
+                    }
                 }
-                if (removingOutliers.containsKey("upper-percentile")) {
-                    outliersUpper = (double) removingOutliers.get("upper-percentile");
-                }
-                if (removingOutliers.containsKey("lower-percentile")) {
-                    outliersLower = (double) removingOutliers.get("lower-percentile");
-                }
-                config.configRemoveOutlier(METHODS.methodMap.get(outliersMethod), outliersThreshold, outliersLower, outliersUpper);
+                config.configRemoveOutlier(method, outliersThreshold, outliersLower, outliersUpper);
             }
 
             if (data.containsKey("aggregating-data")) {
-                Map<String, Object> aggregatingData = (Map<String, Object>) data.get("aggregating-data");
+                List<Map<String, Object>> aggregatingDataList = (List<Map<String, Object>>) data.get("aggregating-data");
+                Map<String, Object> aggregatingData = aggregatingDataList.get(0);
                 String aggregationMethod = (String) aggregatingData.get("method");
                 config.configAggregateData(METHODS.methodMap.get(aggregationMethod));
+            }
+
+            if (data.containsKey("semantic")) {
+                List<Map<String, Object>> semanticList = (List<Map<String, Object>>) data.get("semantic");
+                String address = null;
+                String port = null;
+                String username = null;
+                String password = null;
+
+                for (Map<String, Object> map : semanticList) {
+                    if (map.containsKey("address")) {
+                        address = (String) map.get("address");
+                    }
+                    if (map.containsKey("port")) {
+                        port = String.valueOf(map.get("port"));
+                    }
+                    if (map.containsKey("username")) {
+                        username = (String) map.get("username");
+                    }
+                    if (map.containsKey("password")) {
+                        password = (String) map.get("password");
+                    }
+                }
+
+                config.configSemantic(address, port, username, password);
             }
 
         } catch (FileNotFoundException e) {

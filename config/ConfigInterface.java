@@ -2,7 +2,7 @@ package ufcitycore.config;
 
 public interface ConfigInterface {
 
-    public void configDataBase(String host, String port);
+    public void configDataBase(String host, String port, String username, String password);
     public void configFogMqttBroker(String host, String port);
     public void configCloudMqttBroker(String host, String port);
     public void configSemantic(String host, String port, String username, String password);

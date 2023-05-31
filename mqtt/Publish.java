@@ -19,10 +19,11 @@ public class Publish extends ConnectionDefault{
     public void publish(String message) {
         String clientId = PREFIX+PUB+now();
         try {
-            System.out.print("PUB# Sending data to ServerURI: " + connectionConfig.getServerURI());
+            System.out.println("PUB# Sending data to ServerURI: " + connectionConfig.getServerURI());
             client = new MqttClient(this.connectionConfig.getServerURI(), clientId);
             client.connect();
             for (String topic : connectionConfig.getTopics()) {
+                System.out.println("Pub: " + topic + "  ##  " + message);
                 client.publish(topic, message.getBytes(UTF_8),0, false);
             }
             client.disconnect();
