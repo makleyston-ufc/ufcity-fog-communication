@@ -81,13 +81,12 @@ public class Config {
             if (data.containsKey("data-grouping")) {
                 List<Map<String, Object>> dataGroupingList = (List<Map<String, Object>>) data.get("data-grouping");
 
-                char method = METHODS.methodMap.get("NONE");
+                String method = null;
                 int groupingSize = 0, groupingTime = 0;
 
                 for (Map<String, Object> map : dataGroupingList) {
                     if(map.containsKey("method")) {
-                        String groupingDataMethod = (String) map.get("method");
-                        method = METHODS.methodMap.get(groupingDataMethod);
+                        method = (String) map.get("method");
                     }
                     if (map.containsKey("size")) {
                         groupingSize = (int) map.get("size");
@@ -103,20 +102,22 @@ public class Config {
             if (data.containsKey("missing-data")) {
                 List<Map<String, Object>> missingDataList = (List<Map<String, Object>>) data.get("missing-data");
                 Map<String, Object> missingData = missingDataList.get(0);
-                String missingDataMethod = (String) missingData.get("method");
-                config.configMissingData(METHODS.methodMap.get(missingDataMethod));
+                String method = null;
+                if(missingData.containsKey("method")) {
+                    method = (String) missingData.get("method");
+                }
+                config.configMissingData(method);
             }
 
             if (data.containsKey("removing-outliers")) {
                 List<Map<String, Object>> removingOutliersList = (List<Map<String, Object>>) data.get("removing-outliers");
 
-                char method = METHODS.methodMap.get("NONE");
+                String method = null;
                 double outliersThreshold = 0, outliersUpper = 0, outliersLower = 0;
 
                 for (Map<String, Object> map : removingOutliersList) {
                     if(map.containsKey("method")) {
-                        String m = (String) map.get("method");
-                        method = METHODS.methodMap.get(m);
+                        method = (String) map.get("method");
                     }
                     if (map.containsKey("threshold")) {
                         outliersThreshold = (double) map.get("threshold");
@@ -134,8 +135,11 @@ public class Config {
             if (data.containsKey("aggregating-data")) {
                 List<Map<String, Object>> aggregatingDataList = (List<Map<String, Object>>) data.get("aggregating-data");
                 Map<String, Object> aggregatingData = aggregatingDataList.get(0);
-                String aggregationMethod = (String) aggregatingData.get("method");
-                config.configAggregateData(METHODS.methodMap.get(aggregationMethod));
+                String aggregationMethod = null;
+                if(aggregatingData.containsKey("method")) {
+                    aggregationMethod = (String) aggregatingData.get("method");
+                }
+                config.configAggregateData(aggregationMethod);
             }
 
             if (data.containsKey("semantic")) {
