@@ -10,8 +10,8 @@ public class ConnectionConfig {
     private List<String> topics = new ArrayList<>();
 
     public ConnectionConfig(){
-        this.port = ConnectionData.INNER_PORT; //port default
-        this.host = ConnectionData.INNER_HOST; //host default
+        this.port = ConnectionData.FOG_PORT; //port default
+        this.host = ConnectionData.FOG_HOST; //host default
     }
 
     public ConnectionConfig(String host, String port){

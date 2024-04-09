@@ -8,10 +8,10 @@ public class ConnectionData {
     final public static String PUB = "pub_";
     final public static String SUB = "sub_";
 //    public static String EDGE_PORT = "1883";
-    public static String INNER_PORT = "1883";
+    public static String FOG_PORT = "1883";
     public static String CLOUD_PORT = "1883";
 //    public static String EDGE_HOST;
-    public static String INNER_HOST;
+    public static String FOG_HOST;
     public static String CLOUD_HOST;
     final public static String EDGE_RESOURCES_DATA_SUBSCRIBE = "resource_data";
     final public static String EDGE_DEVICE_SUBSCRIBE = "device";
@@ -53,20 +53,20 @@ public class ConnectionData {
         return topics;
     }
 
-    public static String getInnerPort() {
-        return INNER_PORT;
+    public static String getFogPort() {
+        return FOG_PORT;
     }
 
     public static void setFogPort(String innerPort) {
-        INNER_PORT = innerPort;
+        FOG_PORT = innerPort;
     }
 
-    public static String getInnerHost() {
-        return INNER_HOST;
+    public static String getFogHost() {
+        return FOG_HOST;
     }
 
     public static void setFogHost(String innerHost) {
-        INNER_HOST = innerHost;
+        FOG_HOST = innerHost;
     }
 
     public static String getCloudPort() {

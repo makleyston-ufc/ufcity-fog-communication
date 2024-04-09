@@ -7,13 +7,12 @@ import java.util.Map;
 
 public class Config {
 
-    public static void ReaderYAMLConfig(ConfigInterface config) throws FileNotFoundException {
+    public static void ReaderYAMLConfig(ConfigInterface config) throws Exception {
         try {
-            // Carrega o arquivo YAML
+            // Loading the YAML file.
             FileInputStream inputStream = new FileInputStream("config.yaml");
             Yaml yaml = new Yaml();
             Map<String, Object> data = (Map) yaml.load(inputStream);
-//            System.out.println(data.toString());
 
             if (data.containsKey("fog-computing")) {
                 List<Map<String, Object>> fogComputingList = (List<Map<String, Object>>) data.get("fog-computing");
@@ -28,6 +27,11 @@ public class Config {
                     if (map.containsKey("port")) {
                         fogComputingPort = String.valueOf(map.get("port"));
                     }
+                }
+
+                if(fogComputingAddress == null || fogComputingPort == null) {
+                    System.err.println("The config params in Config.yaml about fog computing are not written properly.");
+                    throw new Exception("The config params in Config.yaml about fog computing are not written properly.");
                 }
 
                 config.configFogMqttBroker(fogComputingAddress, fogComputingPort);
@@ -46,6 +50,11 @@ public class Config {
                     if (map.containsKey("port")) {
                         cloudComputingPort = String.valueOf(map.get("port"));
                     }
+                }
+
+                if(cloudComputingAddress == null || cloudComputingPort == null) {
+                    System.err.println("The config params in Config.yaml about cloud computing are not written properly.");
+                    throw new Exception("The config params in Config.yaml about cloud computing are not written properly.");
                 }
 
                 config.configCloudMqttBroker(cloudComputingAddress, cloudComputingPort);
@@ -74,6 +83,11 @@ public class Config {
                     }
                 }
 
+                if(dbAddress == null || dbPort == null || username == null || password == null) {
+                    System.err.println("The config params in Config.yaml about Database are not written properly.");
+                    throw new Exception("The config params in Config.yaml about Database are not written properly.");
+                }
+
                 config.configDataBase(dbAddress, dbPort, username, password);
             }
 
@@ -81,7 +95,7 @@ public class Config {
                 List<Map<String, Object>> dataGroupingList = (List<Map<String, Object>>) data.get("data-grouping");
 
                 String method = null;
-                int groupingSize = 0, groupingTime = 0;
+                int groupingSize = 0, groupingTime = 0; //Default
 
                 for (Map<String, Object> map : dataGroupingList) {
                     if(map.containsKey("method")) {
@@ -95,16 +109,29 @@ public class Config {
                     }
                 }
 
+                if(method == null){
+                    System.err.println("The config params in Config.yaml about Data Grouping are not written properly.");
+                    throw new Exception("The config params in Config.yaml about Data Grouping are not written properly.");
+                }
+
                 config.configGroupData(method, groupingTime, groupingSize);
             }
 
             if (data.containsKey("missing-data")) {
                 List<Map<String, Object>> missingDataList = (List<Map<String, Object>>) data.get("missing-data");
                 Map<String, Object> missingData = missingDataList.get(0);
+
                 String method = null;
+
                 if(missingData.containsKey("method")) {
                     method = (String) missingData.get("method");
                 }
+
+                if(method == null){
+                    System.err.println("The config params in Config.yaml about Missing Data are not written properly.");
+                    throw new Exception("The config params in Config.yaml about Missing Data are not written properly.");
+                }
+
                 config.configMissingData(method);
             }
 
@@ -112,14 +139,14 @@ public class Config {
                 List<Map<String, Object>> removingOutliersList = (List<Map<String, Object>>) data.get("removing-outliers");
 
                 String method = null;
-                double outliersThreshold = 0, outliersUpper = 0, outliersLower = 0;
+                double outliersThreshold = 0, outliersUpper = 0, outliersLower = 0; //Default
 
                 for (Map<String, Object> map : removingOutliersList) {
                     if(map.containsKey("method")) {
                         method = (String) map.get("method");
                     }
                     if (map.containsKey("threshold")) {
-                        outliersThreshold = (double) map.get("threshold");
+                        outliersThreshold = Double.parseDouble(String.valueOf(map.get("threshold")));
                     }
                     if (map.containsKey("upper-percentile")) {
                         outliersUpper = (double) map.get("upper-percentile");
@@ -128,16 +155,30 @@ public class Config {
                         outliersLower = (double) map.get("lower-percentile");
                     }
                 }
+
+                if(method == null){
+                    System.err.println("The config params in Config.yaml about Removing Outliers are not written properly.");
+                    throw new Exception("The config params in Config.yaml about Removing Outliers are not written properly.");
+                }
+
                 config.configRemoveOutlier(method, outliersThreshold, outliersLower, outliersUpper);
             }
 
             if (data.containsKey("aggregating-data")) {
                 List<Map<String, Object>> aggregatingDataList = (List<Map<String, Object>>) data.get("aggregating-data");
                 Map<String, Object> aggregatingData = aggregatingDataList.get(0);
+
                 String aggregationMethod = null;
+
                 if(aggregatingData.containsKey("method")) {
                     aggregationMethod = (String) aggregatingData.get("method");
                 }
+
+                if(aggregationMethod == null){
+                    System.err.println("The config params in Config.yaml about Aggregation are not written properly.");
+                    throw new Exception("The config params in Config.yaml about Aggregation are not written properly.");
+                }
+
                 config.configAggregateData(aggregationMethod);
             }
 
@@ -161,6 +202,11 @@ public class Config {
                     if (map.containsKey("password")) {
                         password = (String) map.get("password");
                     }
+                }
+
+                if(address == null || port == null || username == null || password == null){
+                    System.err.println("The config params in Config.yaml about Semantic are not written properly.");
+                    throw new Exception("The config params in Config.yaml about Semantic are not written properly.");
                 }
 
                 config.configSemantic(address, port, username, password);
